@@ -1,0 +1,20 @@
+Runtime of the parallel implementation when the "input" directory is on-disk with the the redis implementation:
+
+
+cd /home/alexandra/Desktop ; /usr/bin/env /bin/pyalexandra@alexandra-X542URR:~/Desktop$  cd /home/alexandra/Desktop ; /usr/bin/env /bin/python3 /home/alexandra/.vscode/extensions/ms-python.debugpy-2024.6.0-linux-x64/bundled/libs/debugpy/adapter/../../debugpy/launcher 56211 -- /home/alexandra/Desktop/mat-redis-cache-parallel.py
+Elapsed time: 2054.5741363960005 seconds
+
+
+Runtime of the parallel implementation when the "input" directory is on-disk with the standard, memory-based implementation:
+
+alexandra@alexandra-X542URR:~/Desktop$  /usr/bin/env /bin/python3 /home/alexandra/.vscode/extensions/ms-python.debugpy-2024.6.0-linux-x64/bundled/libs/debugpy/adapter/../../debugpy/launcher 36439 -- /home/alexandra/Desktop/mat_cache_parallel.py
+Elapsed time: 446.14248986299935 seconds
+
+The redis implementation is significantly slower because the LRU caches is more efficient when a program frequently accesses the same data items repeatedly within a short time. The LRU cache keeps recently used items in memory, making subsequent accesses very fast.
+Redis, while powerful, introduces network overhead for every access. This overhead can be significant if your program makes many frequent requests to the Redis server.
+Also LRU cache stores data directly in your program's memory, which is extremely fast, while Redis stores data on a separate server, requiring network communication for each read or write operation. Network communication is inherently slower than accessing memory.
+
+Redis is better for:
+-distributed caching
+-persistence
+-advanced features
